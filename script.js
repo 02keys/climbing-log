@@ -15,33 +15,26 @@ h1, h2 {
   text-align: center;
 }
 
-.category-box {
-  position: relative;
-  height: 200px;
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.5rem;
-}
-
-.category-box.indoor {
-  background: url('3e8e70c7-46cc-400a-8cd6-a4036fb9803f.png') center/cover no-repeat;
-}
-
-.category-box.outdoor {
-  background: url('b43e6d63-d9c4-4e95-bd96-58d715a8af99.png') center/cover no-repeat;
-}
-
-.overlay {
-  background: rgba(0, 0, 0, 0.4);
-  height: 100%;
+.category-list {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.category-box {
+  background-color: #fff;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.category-box:hover {
+  transform: scale(1.02);
+  background-color: #e6f0ff;
 }
 
 .subcategory-buttons {
@@ -49,6 +42,7 @@ h1, h2 {
   flex-direction: column;
   gap: 1rem;
   align-items: center;
+  margin-top: 2rem;
 }
 
 .subcategory-buttons button {
@@ -75,7 +69,7 @@ form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0;
 }
 
 input, textarea, button {
