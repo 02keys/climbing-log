@@ -11,22 +11,20 @@
     <!-- Home Screen -->
     <section id="homeScreen">
       <h1>Climbing Log</h1>
-      <div class="category-box indoor" onclick="openSubcategories('Indoor')">
-        <div class="overlay">
+      <div class="category-list">
+        <div class="category-box" onclick="openSubcategories('Indoor')">
           <h2>Indoor Climbing</h2>
         </div>
-      </div>
-      <div class="category-box outdoor" onclick="openSubcategories('Outdoor')">
-        <div class="overlay">
+        <div class="category-box" onclick="openSubcategories('Outdoor')">
           <h2>Outdoor Climbing</h2>
         </div>
       </div>
     </section>
 
-    <!-- Subcategories Screen -->
+    <!-- Subcategories -->
     <section id="subCategoryScreen" style="display:none">
       <button onclick="goHome()" class="back-btn">← Back</button>
-      <h2 id="subTitle">Select Type</h2>
+      <h2 id="subTitle">Choose Climbing Type</h2>
       <div class="subcategory-buttons">
         <button onclick="openLog('Bouldering')">Bouldering</button>
         <button onclick="openLog('Top Rope')">Top Rope</button>
@@ -40,9 +38,9 @@
       <h2 id="logTitle"></h2>
       <form id="climbForm">
         <input type="text" id="climbName" placeholder="Climb Name" required />
-        <input type="text" id="grade" placeholder="Grade (V5, 5.11a...)" required />
+        <input type="text" id="grade" placeholder="Grade (e.g. V5, 5.11a)" required />
         <input type="date" id="date" required />
-        <input type="number" id="attempts" placeholder="Attempts" />
+        <input type="number" id="attempts" placeholder="Attempts (optional)" />
         <textarea id="notes" placeholder="Notes..."></textarea>
         <button type="submit">Add Climb</button>
       </form>
@@ -50,6 +48,4 @@
     </section>
   </div>
 
-  <script src="script.js"></script>
-</body>
-</html>
+  <script src
