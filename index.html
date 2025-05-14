@@ -3,24 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Climbing Log</title>
+  <title>Climbing Log App</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>🧗 Climbing Log</h1>
+  <div class="container">
+    <h1>🧗 Climbing Log App</h1>
 
-  <form id="climbForm">
-    <input type="text" id="climbName" placeholder="Climb Name" required />
-    <input type="text" id="location" placeholder="Location (e.g. Gym or Crag)" required />
-    <input type="text" id="grade" placeholder="Grade (e.g. V4, 5.11a)" required />
-    <input type="date" id="date" required />
-    <input type="number" id="attempts" placeholder="Attempts" />
-    <textarea id="notes" placeholder="Notes or Beta..."></textarea>
-    <button type="submit">Add Climb</button>
-  </form>
+    <form id="climbForm">
+      <input type="text" id="climbName" placeholder="Climb Name" required />
+      <input type="text" id="location" placeholder="Location / Gym" required />
+      <input type="text" id="grade" placeholder="Grade (V5, 5.10c...)" required />
+      <select id="type" required>
+        <option value="">Select Type</option>
+        <option value="Bouldering">🪨 Bouldering</option>
+        <option value="Sport">🔩 Sport</option>
+        <option value="Trad">🧵 Trad</option>
+      </select>
+      <input type="date" id="date" required />
+      <input type="number" id="attempts" placeholder="Attempts" />
+      <textarea id="notes" placeholder="Notes..."></textarea>
+      <button type="submit">➕ Add Climb</button>
+    </form>
 
-  <h2>📝 Log</h2>
-  <ul id="climbList"></ul>
+    <h2>🗂 Climb Log</h2>
+    <div id="climbList"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>
