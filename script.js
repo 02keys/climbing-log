@@ -1,81 +1,47 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f7f7f7;
+const form = document.getElementById('climbForm');
+const list = document.getElementById('climbList');
+
+let climbs = JSON.parse(localStorage.getItem('climbs')) || [];
+
+function renderClimbs() {
+  list.innerHTML = '';
+  climbs.forEach((climb, index) => {
+    const entry = document.createElement('div');
+    entry.className = 'climb-entry';
+
+    entry.innerHTML = `
+      <button class="delete-btn" onclick="deleteClimb(${index})">×</button>
+      <h3>${climb.name} <span class="type">(${climb.type})</span></h3>
+      <p><strong>Grade:</strong> ${climb.grade}</p>
+      <p><strong>Location:</strong> ${climb.location}</p>
+      <p><strong>Date:</strong> ${climb.date} | <strong>Attempts:</strong> ${climb.attempts || '—'}</p>
+      <p><strong>Notes:</strong> ${climb.notes || '—'}</p>
+    `;
+    list.appendChild(entry);
+  });
 }
 
-.container {
-  max-width: 600px;
-  margin: auto;
-  padding: 1rem;
+function deleteClimb(index) {
+  climbs.splice(index, 1);
+  localStorage.setItem('climbs', JSON.stringify(climbs));
+  renderClimbs();
 }
 
-h1, h2 {
-  text-align: center;
-}
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const newClimb = {
+    name: form.climbName.value,
+    location: form.location.value,
+    grade: form.grade.value,
+    type: form.type.value,
+    date: form.date.value,
+    attempts: form.attempts.value,
+    notes: form.notes.value
+  };
+  climbs.push(newClimb);
+  localStorage.setItem('climbs', JSON.stringify(climbs));
+  form.reset();
+  renderClimbs();
+});
 
-form {
-  background: #fff;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #ddd;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 2rem;
-}
-
-input, select, textarea, button {
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #3e8e41;
-}
-
-#climbList {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.climb-entry {
-  background: white;
-  padding: 1rem;
-  border-left: 6px solid #4CAF50;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  position: relative;
-}
-
-.climb-entry h3 {
-  margin: 0;
-}
-
-.climb-entry .type {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.delete-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-}
+renderClimbs();
