@@ -18,9 +18,8 @@
       padding: 1rem;
     }
 
-    h1 {
+    h1, h2 {
       text-align: center;
-      margin-top: 2rem;
     }
 
     .category-list {
@@ -52,25 +51,89 @@
     }
 
     .indoor {
-      background-image: "C:\Users\nyles\Pictures\Screenshots\Screenshot 2025-05-14 121139.png";
+      background-image: url('Screenshot 2025-05-14 121139.png');
     }
 
     .outdoor {
-      background-image: "C:\Users\nyles\Pictures\Screenshots\Screenshot 2025-05-14 121256.png";
+      background-image: url('Screenshot 2025-05-14 121256.png');
+    }
+
+    .subcategory-screen {
+      display: none;
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .subcategory-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .subcategory-buttons button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .back-btn {
+      margin-top: 2rem;
+      background: transparent;
+      border: none;
+      color: #3b82f6;
+      font-size: 1rem;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Climbing Log</h1>
-    <div class="category-list">
-      <div class="category-box indoor" onclick="alert('Indoor Climbing Clicked')">
-        Indoor Climbing
+    <!-- Home Screen -->
+    <section id="homeScreen">
+      <h1>Climbing Log</h1>
+      <div class="category-list">
+        <div class="category-box indoor" onclick="openSubcategories('Indoor')">Indoor Climbing</div>
+        <div class="category-box outdoor" onclick="openSubcategories('Outdoor')">Outdoor Climbing</div>
       </div>
-      <div class="category-box outdoor" onclick="alert('Outdoor Climbing Clicked')">
-        Outdoor Climbing
+    </section>
+
+    <!-- Subcategory Screen -->
+    <section id="subcategoryScreen" class="subcategory-screen">
+      <h2 id="categoryTitle"></h2>
+      <div class="subcategory-buttons">
+        <button onclick="logClimb('Bouldering')">Bouldering</button>
+        <button onclick="logClimb('Top Rope')">Top Rope</button>
+        <button onclick="logClimb('Lead')">Lead</button>
       </div>
-    </div>
+      <button onclick="goHome()" class="back-btn">← Back to Categories</button>
+    </section>
   </div>
+
+  <script>
+    let currentCategory = '';
+
+    function openSubcategories(category) {
+      currentCategory = category;
+      document.getElementById('homeScreen').style.display = 'none';
+      document.getElementById('subcategoryScreen').style.display = 'block';
+      document.getElementById('categoryTitle').innerText = category + ' Climbing';
+    }
+
+    function goHome() {
+      document.getElementById('subcategoryScreen').style.display = 'none';
+      document.getElementById('homeScreen').style.display = 'block';
+    }
+
+    function logClimb(type) {
+      alert(`You selected: ${currentCategory} → ${type}`);
+      // You can replace the alert with code to open a log form next!
+    }
+  </script>
 </body>
 </html>
