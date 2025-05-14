@@ -11,22 +11,27 @@
       background-color: #f4f4f4;
       color: #333;
     }
+
     .container {
       max-width: 600px;
       margin: auto;
       padding: 1rem;
     }
-    h1, h2 {
+
+    h1 {
       text-align: center;
+      margin-top: 2rem;
     }
+
     .category-list {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
       margin-top: 2rem;
     }
+
     .category-box {
-      height: 150px;
+      height: 180px;
       background-size: cover;
       background-position: center;
       color: white;
@@ -41,12 +46,15 @@
       transition: transform 0.2s ease;
       text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
     }
+
     .category-box:hover {
       transform: scale(1.02);
     }
+
     .indoor {
       background-image: url('Screenshot 2025-05-14 121139.png');
     }
+
     .outdoor {
       background-image: url('Screenshot 2025-05-14 121256.png');
     }
@@ -56,8 +64,12 @@
   <div class="container">
     <h1>Climbing Log</h1>
     <div class="category-list">
-      <div class="category-box indoor" onclick="alert('Indoor Climbing clicked')">Indoor Climbing</div>
-      <div class="category-box outdoor" onclick="alert('Outdoor Climbing clicked')">Outdoor Climbing</div>
+      <div class="category-box indoor" onclick="alert('Indoor Climbing Clicked')">
+        Indoor Climbing
+      </div>
+      <div class="category-box outdoor" onclick="alert('Outdoor Climbing Clicked')">
+        Outdoor Climbing
+      </div>
     </div>
   </div>
 </body>
