@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Climbing Log</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>🧗 Climbing Log</h1>
+
+  <form id="climbForm">
+    <input type="text" id="climbName" placeholder="Climb Name" required />
+    <input type="text" id="location" placeholder="Location (e.g. Gym or Crag)" required />
+    <input type="text" id="grade" placeholder="Grade (e.g. V4, 5.11a)" required />
+    <input type="date" id="date" required />
+    <input type="number" id="attempts" placeholder="Attempts" />
+    <textarea id="notes" placeholder="Notes or Beta..."></textarea>
+    <button type="submit">Add Climb</button>
+  </form>
+
+  <h2>📝 Log</h2>
+  <ul id="climbList"></ul>
+
+  <script src="script.js"></script>
+</body>
+</html>
