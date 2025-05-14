@@ -4,7 +4,97 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Climbing Log App</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 1rem;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .category-box {
+      background-color: #ffffff;
+      padding: 2rem;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .category-box:hover {
+      transform: scale(1.02);
+      background-color: #e6f0ff;
+    }
+
+    .subcategory-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .subcategory-buttons button {
+      padding: 1rem;
+      font-size: 1rem;
+      border: none;
+      background-color: #3b82f6;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 200px;
+    }
+
+    .back-btn {
+      margin-bottom: 1rem;
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+      color: #3b82f6;
+      cursor: pointer;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 1.5rem 0;
+    }
+
+    input, textarea, button {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    #climbList .entry {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 10px;
+      border-left: 4px solid #3b82f6;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -21,7 +111,7 @@
       </div>
     </section>
 
-    <!-- Subcategories -->
+    <!-- Subcategory Screen -->
     <section id="subCategoryScreen" style="display:none">
       <button onclick="goHome()" class="back-btn">← Back</button>
       <h2 id="subTitle">Choose Climbing Type</h2>
@@ -48,7 +138,77 @@
     </section>
   </div>
 
-  <!-- ✅ Make sure this is here at the end of the body -->
-  <script src="script.js"></script>
+  <script>
+    let currentType = '';
+    let currentCategory = '';
+
+    function openSubcategories(category) {
+      currentCategory = category;
+      document.getElementById('homeScreen').style.display = 'none';
+      document.getElementById('subCategoryScreen').style.display = 'block';
+      document.getElementById('subTitle').innerText = category + ' Climbing: Choose Type';
+    }
+
+    function goHome() {
+      document.getElementById('subCategoryScreen').style.display = 'none';
+      document.getElementById('logScreen').style.display = 'none';
+      document.getElementById('homeScreen').style.display = 'block';
+    }
+
+    function goToSubcategories() {
+      document.getElementById('logScreen').style.display = 'none';
+      document.getElementById('subCategoryScreen').style.display = 'block';
+    }
+
+    function openLog(type) {
+      currentType = type;
+      document.getElementById('subCategoryScreen').style.display = 'none';
+      document.getElementById('logScreen').style.display = 'block';
+      document.getElementById('logTitle').innerText = `${currentCategory} - ${type} Log`;
+      renderLogs();
+    }
+
+    function renderLogs() {
+      const climbList = document.getElementById('climbList');
+      climbList.innerHTML = '';
+      const climbs = JSON.parse(localStorage.getItem('climbs')) || [];
+      const filtered = climbs.filter(climb => climb.type === currentType && climb.category === currentCategory);
+
+      filtered.forEach(climb => {
+        const entry = document.createElement('div');
+        entry.className = 'entry';
+        entry.innerHTML = `
+          <h3>${climb.name}</h3>
+          <p><strong>Grade:</strong> ${climb.grade}</p>
+          <p><strong>Date:</strong> ${climb.date}</p>
+          <p><strong>Attempts:</strong> ${climb.attempts || '—'}</p>
+          <p><strong>Notes:</strong> ${climb.notes || '—'}</p>
+        `;
+        climbList.appendChild(entry);
+      });
+    }
+
+    const form = document.getElementById('climbForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const newClimb = {
+        name: form.climbName.value,
+        grade: form.grade.value,
+        date: form.date.value,
+        attempts: form.attempts.value,
+        notes: form.notes.value,
+        type: currentType,
+        category: currentCategory
+      };
+
+      const climbs = JSON.parse(localStorage.getItem('climbs')) || [];
+      climbs.push(newClimb);
+      localStorage.setItem('climbs', JSON.stringify(climbs));
+
+      form.reset();
+      renderLogs();
+    });
+  </script>
 </body>
 </html>
