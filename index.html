@@ -11,204 +11,54 @@
       background-color: #f4f4f4;
       color: #333;
     }
-
     .container {
       max-width: 600px;
       margin: auto;
       padding: 1rem;
     }
-
     h1, h2 {
       text-align: center;
     }
-
     .category-list {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
       margin-top: 2rem;
     }
-
     .category-box {
-      background-color: #ffffff;
-      padding: 2rem;
-      text-align: center;
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       cursor: pointer;
       transition: transform 0.2s ease;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
     }
-
     .category-box:hover {
       transform: scale(1.02);
-      background-color: #e6f0ff;
     }
-
-    .subcategory-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      align-items: center;
-      margin-top: 2rem;
+    .indoor {
+      background-image: url('Screenshot 2025-05-14 121139.png');
     }
-
-    .subcategory-buttons button {
-      padding: 1rem;
-      font-size: 1rem;
-      border: none;
-      background-color: #3b82f6;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      width: 200px;
-    }
-
-    .back-btn {
-      margin-bottom: 1rem;
-      background: transparent;
-      border: none;
-      font-size: 1rem;
-      color: #3b82f6;
-      cursor: pointer;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin: 1.5rem 0;
-    }
-
-    input, textarea, button {
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-
-    #climbList .entry {
-      background: white;
-      padding: 1rem;
-      margin-bottom: 10px;
-      border-left: 4px solid #3b82f6;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    .outdoor {
+      background-image: url('Screenshot 2025-05-14 121256.png');
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Home Screen -->
-    <section id="homeScreen">
-      <h1>Climbing Log</h1>
-      <div class="category-list">
-        <div class="category-box" onclick="openSubcategories('Indoor')">
-          <h2>Indoor Climbing</h2>
-        </div>
-        <div class="category-box" onclick="openSubcategories('Outdoor')">
-          <h2>Outdoor Climbing</h2>
-        </div>
-      </div>
-    </section>
-
-    <!-- Subcategory Screen -->
-    <section id="subCategoryScreen" style="display:none">
-      <button onclick="goHome()" class="back-btn">← Back</button>
-      <h2 id="subTitle">Choose Climbing Type</h2>
-      <div class="subcategory-buttons">
-        <button onclick="openLog('Bouldering')">Bouldering</button>
-        <button onclick="openLog('Top Rope')">Top Rope</button>
-        <button onclick="openLog('Lead')">Lead</button>
-      </div>
-    </section>
-
-    <!-- Log Screen -->
-    <section id="logScreen" style="display:none">
-      <button onclick="goToSubcategories()" class="back-btn">← Back</button>
-      <h2 id="logTitle"></h2>
-      <form id="climbForm">
-        <input type="text" id="climbName" placeholder="Climb Name" required />
-        <input type="text" id="grade" placeholder="Grade (e.g. V5, 5.11a)" required />
-        <input type="date" id="date" required />
-        <input type="number" id="attempts" placeholder="Attempts (optional)" />
-        <textarea id="notes" placeholder="Notes..."></textarea>
-        <button type="submit">Add Climb</button>
-      </form>
-      <div id="climbList"></div>
-    </section>
+    <h1>Climbing Log</h1>
+    <div class="category-list">
+      <div class="category-box indoor" onclick="alert('Indoor Climbing clicked')">Indoor Climbing</div>
+      <div class="category-box outdoor" onclick="alert('Outdoor Climbing clicked')">Outdoor Climbing</div>
+    </div>
   </div>
-
-  <script>
-    let currentType = '';
-    let currentCategory = '';
-
-    function openSubcategories(category) {
-      currentCategory = category;
-      document.getElementById('homeScreen').style.display = 'none';
-      document.getElementById('subCategoryScreen').style.display = 'block';
-      document.getElementById('subTitle').innerText = category + ' Climbing: Choose Type';
-    }
-
-    function goHome() {
-      document.getElementById('subCategoryScreen').style.display = 'none';
-      document.getElementById('logScreen').style.display = 'none';
-      document.getElementById('homeScreen').style.display = 'block';
-    }
-
-    function goToSubcategories() {
-      document.getElementById('logScreen').style.display = 'none';
-      document.getElementById('subCategoryScreen').style.display = 'block';
-    }
-
-    function openLog(type) {
-      currentType = type;
-      document.getElementById('subCategoryScreen').style.display = 'none';
-      document.getElementById('logScreen').style.display = 'block';
-      document.getElementById('logTitle').innerText = `${currentCategory} - ${type} Log`;
-      renderLogs();
-    }
-
-    function renderLogs() {
-      const climbList = document.getElementById('climbList');
-      climbList.innerHTML = '';
-      const climbs = JSON.parse(localStorage.getItem('climbs')) || [];
-      const filtered = climbs.filter(climb => climb.type === currentType && climb.category === currentCategory);
-
-      filtered.forEach(climb => {
-        const entry = document.createElement('div');
-        entry.className = 'entry';
-        entry.innerHTML = `
-          <h3>${climb.name}</h3>
-          <p><strong>Grade:</strong> ${climb.grade}</p>
-          <p><strong>Date:</strong> ${climb.date}</p>
-          <p><strong>Attempts:</strong> ${climb.attempts || '—'}</p>
-          <p><strong>Notes:</strong> ${climb.notes || '—'}</p>
-        `;
-        climbList.appendChild(entry);
-      });
-    }
-
-    const form = document.getElementById('climbForm');
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const newClimb = {
-        name: form.climbName.value,
-        grade: form.grade.value,
-        date: form.date.value,
-        attempts: form.attempts.value,
-        notes: form.notes.value,
-        type: currentType,
-        category: currentCategory
-      };
-
-      const climbs = JSON.parse(localStorage.getItem('climbs')) || [];
-      climbs.push(newClimb);
-      localStorage.setItem('climbs', JSON.stringify(climbs));
-
-      form.reset();
-      renderLogs();
-    });
-  </script>
 </body>
 </html>
