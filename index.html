@@ -94,11 +94,12 @@
 </head>
 <body>
   <div class="container">
+    <!-- Home Screen -->
     <section id="homeScreen">
       <h1>Climbing Log</h1>
       <div class="category-list">
-        <div class="category-box indoor" onclick="navigateToCategory('indoor')">Indoor Climbing</div>
-        <div class="category-box outdoor" onclick="navigateToCategory('outdoor')">Outdoor Climbing</div>
+        <div class="category-box indoor" onclick="showSubcategories('Indoor')">Indoor Climbing</div>
+        <div class="category-box outdoor" onclick="showSubcategories('Outdoor')">Outdoor Climbing</div>
       </div>
     </section>
 
@@ -106,23 +107,32 @@
     <section id="subcategoryScreen" class="subcategory-screen">
       <h2 id="categoryTitle"></h2>
       <div class="subcategory-buttons">
-        <button onclick="navigateToClimb('bouldering')">Bouldering</button>
-        <button onclick="navigateToClimb('toprope')">Top Rope</button>
-        <button onclick="navigateToClimb('lead')">Lead</button>
+        <button onclick="alertSubcategory('Bouldering')">Bouldering</button>
+        <button onclick="alertSubcategory('Top Rope')">Top Rope</button>
+        <button onclick="alertSubcategory('Lead')">Lead</button>
       </div>
+      <button class="back-btn" onclick="goHome()">← Back</button>
     </section>
   </div>
 
   <script>
-    function navigateToCategory(category) {
-      // Navigate directly to the page for the selected category
-      window.location.href = `${category}.html`;
+    let currentCategory = "";
+
+    function showSubcategories(category) {
+      currentCategory = category;
+      document.getElementById("homeScreen").style.display = "none";
+      document.getElementById("subcategoryScreen").style.display = "block";
+      document.getElementById("categoryTitle").innerText = category + " Climbing";
     }
 
-    function navigateToClimb(climbType) {
-      // Navigate to the specific page for the selected climb type
-      const baseCategory = document.getElementById('categoryTitle').innerText.toLowerCase().split(' ')[0];
-      window.location.href = `${baseCategory}-${climbType}.html`;
+    function goHome() {
+      document.getElementById("subcategoryScreen").style.display = "none";
+      document.getElementById("homeScreen").style.display = "block";
+    }
+
+    function alertSubcategory(type) {
+      alert(`${currentCategory} - ${type}`);
+      // Replace this with navigation or a log form later
     }
   </script>
 </body>
